@@ -200,7 +200,7 @@
          dozing).  This should be enabled if you have such services and expect apps to
          correctly use them when installed on your device.  Otherwise, keep this disabled
          so that applications can still use their own mechanisms. -->
-    <bool name="config_enableAutoPowerModes">false</bool>
+    <bool name="config_enableAutoPowerModes">true</bool>
 
     <!-- The threshold angle for any motion detection in auto-power save modes.
          In hundreths of a degree. -->
@@ -215,7 +215,7 @@
     <bool name="config_autoPowerModePreferWristTilt">false</bool>
 
     <!-- If a location should be pre-fetched when going into device idle. -->
-    <bool name="config_autoPowerModePrefetchLocation">true</bool>
+    <bool name="config_autoPowerModePrefetchLocation">false</bool>
 
     <!-- The duration (in milliseconds) that the radio will scan for a signal
          when there's no network connection. If the scan doesn't timeout, use zero -->
@@ -268,7 +268,7 @@
     </string-array>
 
     <!-- The maximum duration (in milliseconds) we expect a network transition to take -->
-    <integer name="config_networkTransitionTimeout">60000</integer>
+    <integer name="config_networkTransitionTimeout">30000</integer>
 
     <!-- Whether/how to notify the user on network switches. See LingerMonitor.java. -->
     <integer translatable="false" name="config_networkNotifySwitchType">0</integer>
@@ -965,7 +965,7 @@
     <integer name="config_shutdownBatteryTemperature">680</integer>
 
     <!-- Display low battery warning when battery level dips to this value -->
-    <integer name="config_lowBatteryWarningLevel">15</integer>
+    <integer name="config_lowBatteryWarningLevel">0</integer>
 
     <!-- Close low battery warning when battery level reaches the lowBatteryWarningLevel
          plus this -->
@@ -978,7 +978,7 @@
     <integer name="config_defaultNotificationLedOn">500</integer>
 
     <!-- Default LED off time for notification LED in milliseconds. -->
-    <integer name="config_defaultNotificationLedOff">2000</integer>
+    <integer name="config_defaultNotificationLedOff">1500</integer>
 
     <!-- Default value for led color when battery is low on charge -->
     <integer name="config_notificationsBatteryLowARGB">0xFFFF0000</integer>
@@ -1155,7 +1155,7 @@
     <!-- Screen brightness used to dim the screen while dozing in a very low power state.
          May be less than the minimum allowed brightness setting
          that can be set by the user. -->
-    <integer name="config_screenBrightnessDoze">1</integer>
+    <integer name="config_screenBrightnessDoze">15</integer>
 
     <!-- Allow automatic adjusting of the screen brightness while dozing in low power state. -->
     <bool name="config_allowAutoBrightnessWhileDozing">false</bool>
@@ -1338,9 +1338,9 @@
     <integer-array name="config_dozeBrightnessBacklightValues">
     </integer-array>
 
-    <integer name="config_buttonBrightnessSettingDefault">255</integer>
+    <integer name="config_buttonBrightnessSettingDefault">9</integer>
     <integer name="config_keyboardBrightnessSettingDefault">0</integer>
-    <bool name="config_deviceHasVariableButtonBrightness">false</bool>
+    <bool name="config_deviceHasVariableButtonBrightness">true</bool>
 
     <!-- Amount of time it takes for the light sensor to warm up in milliseconds.
          For this time after the screen turns on, the Power Manager
@@ -1655,7 +1655,7 @@
          NORMAL also preserves durability in non-WAL modes and uses checksums to ensure
          integrity although there is a small chance that an error might go unnoticed.
          Choices are: FULL, NORMAL, OFF. -->
-    <string name="db_default_sync_mode" translatable="false">FULL</string>
+    <string name="db_default_sync_mode" translatable="false">NORMAL</string>
 
     <!-- The database synchronization mode when using Write-Ahead Logging.
          FULL is safest and preserves durability at the cost of extra fsyncs.
@@ -1663,7 +1663,7 @@
          and after checkpoint operations.  If checkpoints are infrequent and power loss
          occurs, then committed transactions could be lost and applications might break.
          Choices are: FULL, NORMAL, OFF. -->
-    <string name="db_wal_sync_mode" translatable="false">FULL</string>
+    <string name="db_wal_sync_mode" translatable="false">NORMAL</string>
 
     <!-- The Write-Ahead Log auto-checkpoint interval in database pages (typically 1 to 4KB).
          The log is checkpointed automatically whenever it exceeds this many pages.
@@ -1837,9 +1837,9 @@
     <bool name="config_dreamsSupported">true</bool>
 
     <!-- If supported, are dreams enabled? (by default) -->
-    <bool name="config_dreamsEnabledByDefault">true</bool>
+    <bool name="config_dreamsEnabledByDefault">false</bool>
     <!-- If supported and enabled, are dreams activated when docked? (by default) -->
-    <bool name="config_dreamsActivatedOnDockByDefault">true</bool>
+    <bool name="config_dreamsActivatedOnDockByDefault">false</bool>
     <!-- If supported and enabled, are dreams activated when asleep and charging? (by default) -->
     <bool name="config_dreamsActivatedOnSleepByDefault">false</bool>
     <!-- ComponentName of the default dream (Settings.Secure.DEFAULT_SCREENSAVER_COMPONENT) -->
@@ -1858,6 +1858,8 @@
          effectively and terminate the dream.  Use -1 to disable this safety feature.  -->
     <integer name="config_dreamsBatteryLevelDrainCutoff">5</integer>
 
+    <bool name="doze_display_state_supported">true</bool>
+
     <!-- ComponentName of a dream to show whenever the system would otherwise have
          gone to sleep.  When the PowerManager is asked to go to sleep, it will instead
          try to start this dream if possible.  The dream should typically call startDozing()
@@ -1867,11 +1869,11 @@
 
          Note that doze dreams are not subject to the same start conditions as ordinary dreams.
          Doze dreams will run whenever the power manager is in a dozing state. -->
-    <string name="config_dozeComponent" translatable="false"></string>
+    <string name="config_dozeComponent" translatable="false">com.android.systemui/com.android.systemui.doze.DozeService</string>
 
     <!-- If true, the doze component is not started until after the screen has been
          turned off and the screen off animation has been performed. -->
-    <bool name="config_dozeAfterScreenOff">false</bool>
+    <bool name="config_dozeAfterScreenOff">true</bool>
 
     <!-- Doze: should the TYPE_PICK_UP_GESTURE sensor be used as a pulse signal. -->
     <bool name="config_dozePulsePickup">false</bool>
@@ -1897,7 +1899,7 @@
 
          Refer to autosuspend.h for details.
     -->
-    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">false</bool>
+    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
 
     <!-- Power Management: Specifies whether to decouple the interactive state of the
          device from the display on/off state.
@@ -1916,7 +1918,7 @@
 
          Refer to power.h for details.
     -->
-    <bool name="config_powerDecoupleInteractiveModeFromDisplay">false</bool>
+    <bool name="config_powerDecoupleInteractiveModeFromDisplay">true</bool>
 
     <!-- User activity timeout: Minimum screen off timeout in milliseconds.
 
@@ -1927,7 +1929,7 @@
          This value must be greater than zero, otherwise the device will immediately
          fall asleep again as soon as it is awoken.
     -->
-    <integer name="config_minimumScreenOffTimeout">10000</integer>
+    <integer name="config_minimumScreenOffTimeout">7000</integer>
 
     <!-- User activity timeout: Maximum screen dim duration in milliseconds.
 
@@ -1943,7 +1945,7 @@
          This value may be zero in which case the screen will not dim before the
          device goes to sleep.
     -->
-    <integer name="config_maximumScreenDimDuration">7000</integer>
+    <integer name="config_maximumScreenDimDuration">5000</integer>
 
     <!-- User activity timeout: Maximum screen dim duration as a percentage of screen off timeout.
 
@@ -1959,11 +1961,11 @@
          This value must be between 0% and 100%.  If the value is zero, the screen will not
          dim before the device goes to sleep.
     -->
-    <fraction name="config_maximumScreenDimRatio">20%</fraction>
+    <fraction name="config_maximumScreenDimRatio">50%</fraction>
 
     <!-- Base "touch slop" value used by ViewConfiguration as a
          movement threshold where scrolling should begin. -->
-    <dimen name="config_viewConfigurationTouchSlop">8dp</dimen>
+    <dimen name="config_viewConfigurationTouchSlop">6dp</dimen>
 
     <!-- Minimum velocity to initiate a fling, as measured in dips per second. -->
     <dimen name="config_viewMinFlingVelocity">50dp</dimen>
@@ -1972,7 +1974,7 @@
     <dimen name="config_viewMaxFlingVelocity">8000dp</dimen>
 
     <!-- Amount of time in ms the user needs to press the relevant key to bring up the global actions dialog -->
-    <integer name="config_globalActionsKeyTimeout">500</integer>
+    <integer name="config_globalActionsKeyTimeout">400</integer>
 
     <!-- Distance that should be scrolled in response to a {@link MotionEvent#ACTION_SCROLL event}
          with an axis value of 1. -->
@@ -2337,7 +2339,7 @@
          flushed to the display while dozing.  This value needs to be large enough
          to account for processing and rendering time plus a frame or two of latency
          in the display pipeline plus some slack just to be sure. -->
-    <integer name="config_drawLockTimeoutMillis">120</integer>
+    <integer name="config_drawLockTimeoutMillis">100</integer>
 
     <!-- default telephony hardware configuration for this platform.
     -->
@@ -2589,7 +2591,7 @@
     <string name="config_keyguardComponent" translatable="false">com.android.systemui/com.android.systemui.keyguard.KeyguardService</string>
 
     <!-- For performance and storage reasons, limit the number of fingerprints per user -->
-    <integer name="config_fingerprintMaxTemplatesPerUser">5</integer>
+    <integer name="config_fingerprintMaxTemplatesPerUser">2</integer>
 
     <!-- This config is used to force VoiceInteractionService to start on certain low ram devices.
          It declares the package name of VoiceInteractionService that should be started. -->
@@ -2799,7 +2801,7 @@
         When true, the user can select to show/hide operator name through a
         checkbox in Settings. When false, there is no option to show operator
         name (no checkbox in Settings). -->
-    <bool name="config_showOperatorNameInStatusBar">false</bool>
+    <bool name="config_showOperatorNameInStatusBar">true</bool>
     <bool name="config_regional_hotspot_show_maximum_connection_enable">false</bool>
     <bool name="config_regional_hotspot_show_broadcast_ssid_checkbox">false</bool>
     <bool name="config_regional_hotspot_show_notification_when_turn_on">false</bool>
